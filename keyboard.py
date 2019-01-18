@@ -10,7 +10,6 @@ bot = telebot.TeleBot(token)
 
 class Keyboard:
     def start_keyboard(message):
-        Auth.check_user(message)
         markup = types.ReplyKeyboardMarkup()
         button1 = types.KeyboardButton('\ud83d\udcbc Simple Keyboard')
         button2 = types.KeyboardButton('\ud83c\udfe2 Inline Keyboard')

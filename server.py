@@ -5,6 +5,7 @@ import telebot
 from config import token
 from keyboard import *
 from inline_keyboard import *
+from authenticate import *
 
 logger = telebot.logger
 telebot.logger.setLevel(logging.INFO)
@@ -16,7 +17,13 @@ bot = telebot.TeleBot(token)
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    Keyboard.start_keyboard(message)
+    u_check = Auth.check_user(message)
+    print(message)
+    if u_check:
+        Keyboard.start_keyboard(message)
+    else:
+        Auth.create_user(message)
+        Keyboard.start_keyboard(message)
 
 
 @bot.message_handler(regexp='Simple Keyboard')
