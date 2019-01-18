@@ -2,7 +2,12 @@ import time
 import logging
 import telebot
 
-from config import token
+from vedis import Vedis
+from config import (
+    token,
+    db_file,
+    States
+)
 from keyboard import *
 from inline_keyboard import *
 from authenticate import *
@@ -10,9 +15,24 @@ from authenticate import *
 logger = telebot.logger
 telebot.logger.setLevel(logging.INFO)
 
-API_TOKEN = '603880302:AAH_kDRHh6C_Ne-yemXwrUK4h1OriPGRdbQ'
-
 bot = telebot.TeleBot(token)
+
+
+def get_current_state(user_id):
+    with Vedis(db_file) as db:
+        try:
+            return db[user_id].decode()
+        except:
+            return States.S_START.value
+
+
+def set_state(user_id, value):
+    with Vedis(db_file) as db:
+        try:
+            db[user_id] value
+            return True
+        except:
+            return False
 
 
 @bot.message_handler(commands=['start'])
