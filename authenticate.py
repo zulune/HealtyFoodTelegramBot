@@ -51,4 +51,7 @@ class Auth:
             }
         }
         r = requests.post(url, headers=headers, data=json.dumps(data))
+
+    def get_user(telegram_id):
+        pass
     

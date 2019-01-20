@@ -1,6 +1,7 @@
 import time
 import logging
 import telebot
+import dbworker
 
 from vedis import Vedis
 from config import (
@@ -18,23 +19,6 @@ telebot.logger.setLevel(logging.INFO)
 bot = telebot.TeleBot(token)
 
 
-def get_current_state(user_id):
-    with Vedis(db_file) as db:
-        try:
-            return db[user_id].decode()
-        except:
-            return States.S_START.value
-
-
-def set_state(user_id, value):
-    with Vedis(db_file) as db:
-        try:
-            db[user_id] value
-            return True
-        except:
-            return False
-
-
 @bot.message_handler(commands=['start'])
 def start(message):
     u_check = Auth.check_user(message)
@@ -44,6 +28,19 @@ def start(message):
     else:
         Auth.create_user(message)
         Keyboard.start_keyboard(message)
+
+
+
+@bot.message_handler(regexp="Оставить отзыв")
+def review(message):
+    bot.send_message(message.chat.id, 'Напешите отзыв ;)')
+    dbworker.set_state(message.chat.id, States.S_ENTER_REVIEW.value)
+
+
+@bot.message_handler(func=lambda message: dbworker.get_current_state(message.chat.id) == States.S_ENTER_REVIEW.value)
+def user_enter_review(message):
+    bot.send_message(message.chat.id, "Спасибо за оставленный отзыв :)")
+    dbworker.set_state(message.chat.id, States.S_START.value)
 
 
 @bot.message_handler(regexp='Simple Keyboard')
