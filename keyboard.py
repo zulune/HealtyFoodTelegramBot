@@ -14,7 +14,7 @@ class Keyboard:
         button1 = types.KeyboardButton('\ud83d\udcbc Simple Keyboard')
         button2 = types.KeyboardButton('\ud83c\udfe2 Inline Keyboard')
         button3 = types.KeyboardButton('\ud83d\udcf2 Callback Inline')
-        review_button = types.KeyboardButton('\xF0\x9F\x94\x99 Залишити відгук')
+        review_button = types.KeyboardButton('Оставить отзыв')
         markup.row(button1, button2)
         markup.row(button3, review_button)
         bot.send_message(message.chat.id, 'Моє меню: ', reply_markup=markup)

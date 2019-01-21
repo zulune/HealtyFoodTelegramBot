@@ -1,6 +1,17 @@
+# ConfigFile
 config.py
+
+# Enviroment
 /env/
 /venv/
+
+# IDE and Editor
 /.vscode/
 
+# Cache
 /__pycache__/
+
+# DB
+*.vdb
+*.sqlite3
+*.sqlite

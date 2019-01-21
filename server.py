@@ -12,6 +12,7 @@ from config import (
 from keyboard import *
 from inline_keyboard import *
 from authenticate import *
+from review import *
 
 logger = telebot.logger
 telebot.logger.setLevel(logging.INFO)
@@ -22,12 +23,17 @@ bot = telebot.TeleBot(token)
 @bot.message_handler(commands=['start'])
 def start(message):
     u_check = Auth.check_user(message)
-    print(message)
+    state = dbworker.get_current_state(message.chat.id)
+    print(state)
     if u_check:
-        Keyboard.start_keyboard(message)
+        if state == States.S_ENTER_REVIEW.value:
+            bot.send_message(message.chat.id, 'Вы хотели оставить отзыв :)')
+        else:
+            Keyboard.start_keyboard(message)
     else:
         Auth.create_user(message)
         Keyboard.start_keyboard(message)
+    dbworker.set_state(message.chat.id, States.S_START.value)
 
 
 
@@ -39,6 +45,8 @@ def review(message):
 
 @bot.message_handler(func=lambda message: dbworker.get_current_state(message.chat.id) == States.S_ENTER_REVIEW.value)
 def user_enter_review(message):
+    print('Enter review success')
+    Review.post_review(message)
     bot.send_message(message.chat.id, "Спасибо за оставленный отзыв :)")
     dbworker.set_state(message.chat.id, States.S_START.value)
 
@@ -51,6 +59,7 @@ def button_one(message):
 @bot.message_handler(regexp='Back to main menu')
 def buck_button(message):
     Keyboard.start_keyboard(message)
+    dbworker.set_state(message.chat.id, States.S_START.value)
 
 
 @bot.message_handler(regexp='Inline keybord')
@@ -72,4 +81,7 @@ def callback_answer(callback_query: types.CallbackQuery):
     )
 
 
-bot.polling()
+bot.remove_webhook()
+
+if __name__ == '__main__':
+    bot.polling(none_stop=True)
