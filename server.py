@@ -3,7 +3,6 @@ import logging
 import telebot
 import dbworker
 
-from vedis import Vedis
 from config import (
     token,
     db_file,
@@ -36,7 +35,6 @@ def start(message):
     dbworker.set_state(message.chat.id, States.S_START.value)
 
 
-
 @bot.message_handler(regexp="Оставить отзыв")
 def review(message):
     bot.send_message(message.chat.id, 'Напешите отзыв ;)')
@@ -63,8 +61,8 @@ def buck_button(message):
 
 
 @bot.message_handler(regexp='Inline keybord')
-def button_programm(message):
-    InlineKeyboard.button_keyboard_proggram(message)
+def button_program(message):
+    InlineKeyboard.button_keyboard_program(message)
 
 
 @bot.message_handler(regexp='Callback Inline')
