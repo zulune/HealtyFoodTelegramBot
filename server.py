@@ -49,6 +49,11 @@ def user_enter_review(message):
     dbworker.set_state(message.chat.id, States.S_START.value)
 
 
+@bot.message_handler(regexp="")
+def body_weight(message):
+    print('Enter user body weight')
+
+
 @bot.message_handler(regexp='Simple Keyboard')
 def button_one(message):
     Keyboard.button_one_keyboard(message)
