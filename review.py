@@ -18,7 +18,7 @@ class Review:
         user = Auth.get_user(message.chat.id)
         headers = {'Content-Type': 'application/json',}
         data = {
-            'user': user.id,
+            'user': user['id'],
             'text_review': message.text
         }
         r = requests.post(url, headers=headers, data=json.dumps(data))

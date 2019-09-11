@@ -53,5 +53,8 @@ class Auth:
         r = requests.post(url, headers=headers, data=json.dumps(data))
 
     def get_user(telegram_id):
-        pass
+        url = "http://localhost:8000/api/v2/user/{}/"
+        r = requests.get(url.format(telegram_id))
+        user = json.loads(r.text)
+        return user
     

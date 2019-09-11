@@ -9,13 +9,13 @@ class InlineKeyboard:
     def button_two_keyboard(message):
         keyboard = types.InlineKeyboardMarkup()
         url_button = types.InlineKeyboardButton(
-            text = 'GitHub',
-            url = 'https://github.com'
+            text='GitHub',
+            url='https://github.com'
         )
         keyboard.add(url_button)
         bot.send_message(message.chat.id,
-            'Якщо натиснете кнопку, перейдете на сайт GitHub',
-            reply_markup=keyboard)
+                         'Якщо натиснете кнопку, перейдете на сайт GitHub',
+                         reply_markup=keyboard)
 
     def callback_keyboard(message):
         keyboard = types.InlineKeyboardMarkup()
@@ -25,5 +25,8 @@ class InlineKeyboard:
         )
         keyboard.add(button)
         bot.send_message(message.chat.id,
-            'Функція зворотнього звязку',
-            reply_markup=keyboard)
+                         'Функція зворотнього звязку',
+                         reply_markup=keyboard)
+
+    def button_keyboard_program(self, message):
+        pass
