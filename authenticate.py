@@ -12,7 +12,7 @@ bot = telebot.TeleBot(token)
 class Auth:
 
     def check_user(message):
-        url = 'http://localhost:9000/api/v2/user/{}/'
+        url = 'http://185.25.117.22/api/v2/user/{}/'
         r = requests.get(url.format(message.chat.id))
         if r.status_code == requests.codes.ok:
             return True
@@ -22,7 +22,7 @@ class Auth:
         return False
 
     def create_user(message):
-        url = 'http://localhost:9000/api/v2/user/'
+        url = 'http://185.25.117.22/api/v2/user/'
         username = None
         first_name = message.chat.first_name
         last_name = message.chat.last_name
@@ -53,7 +53,7 @@ class Auth:
         r = requests.post(url, headers=headers, data=json.dumps(data))
 
     def get_user(telegram_id):
-        url = "http://localhost:8000/api/v2/user/{}/"
+        url = "http://185.25.117.22/api/v2/user/{}/"
         r = requests.get(url.format(telegram_id))
         user = json.loads(r.text)
         return user

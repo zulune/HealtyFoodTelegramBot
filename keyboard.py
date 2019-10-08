@@ -11,9 +11,9 @@ bot = telebot.TeleBot(token)
 class Keyboard:
     def start_keyboard(message):
         markup = types.ReplyKeyboardMarkup()
-        button1 = types.KeyboardButton('\ud83d\udcbc Simple Keyboard')
-        button2 = types.KeyboardButton('\ud83c\udfe2 Inline Keyboard')
-        button3 = types.KeyboardButton('\ud83d\udcf2 Callback Inline')
+        # button1 = types.KeyboardButton('\ud83d\udcbc Simple Keyboard')
+        # button2 = types.KeyboardButton('\ud83c\udfe2 Inline Keyboard')
+        # button3 = types.KeyboardButton('\ud83d\udcf2 Callback Inline')
         review_button = types.KeyboardButton('Оставить отзыв')
         markup.row(button1, button2)
         markup.row(button3, review_button)

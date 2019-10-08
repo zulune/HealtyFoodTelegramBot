@@ -11,10 +11,10 @@ bot = telebot.TeleBot(token)
 class Review:
 
     def get_review(message):
-        url = 'http://localhost:9000/api/review'
+        url = 'http://185.25.117.22/api/review'
 
     def post_review(message):
-        url = 'http://localhost:9000/api/v2/review/'
+        url = 'http://185.25.117.22/api/v2/review/'
         user = Auth.get_user(message.chat.id)
         headers = {'Content-Type': 'application/json',}
         data = {
