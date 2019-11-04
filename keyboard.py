@@ -10,14 +10,15 @@ bot = telebot.TeleBot(token)
 
 class Keyboard:
     def start_keyboard(message):
-        markup = types.ReplyKeyboardMarkup()
+        markup = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
         # button1 = types.KeyboardButton('\ud83d\udcbc Simple Keyboard')
         # button2 = types.KeyboardButton('\ud83c\udfe2 Inline Keyboard')
         # button3 = types.KeyboardButton('\ud83d\udcf2 Callback Inline')
-        review_button = types.KeyboardButton('Оставить отзыв')
+        review_button = types.KeyboardButton('Залишити відгук')
         # markup.row(button1, button2)
-        markup.row(button3, review_button)
-        bot.send_message(message.chat.id, 'Моє меню: ', reply_markup=markup)
+        # markup.row(button3, review_button)
+        markup.row(review_button)
+        bot.send_message(message.chat.id, 'Навігація: ', reply_markup=markup)
 
     def button_one_keyboard(message):
         markup = types.ReplyKeyboardMarkup()

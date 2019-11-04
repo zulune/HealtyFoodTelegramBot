@@ -12,6 +12,7 @@ from keyboard import *
 from inline_keyboard import *
 from authenticate import *
 from review import *
+from telephone import *
 
 logger = telebot.logger
 telebot.logger.setLevel(logging.INFO)
@@ -41,12 +42,32 @@ def review(message):
     dbworker.set_state(message.chat.id, States.S_ENTER_REVIEW.value)
 
 
+@bot.message_handler(commands=['number'])
+def phone(message):
+    keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
+    button_phone = types.KeyboardButton('Відправити номер телефону', request_contact=True)
+    keyboard.add(button_phone)
+    bot.send_message(message.chat.id, 'Номер телефону', reply_markup=keyboard)
+
+
 @bot.message_handler(func=lambda message: dbworker.get_current_state(message.chat.id) == States.S_ENTER_REVIEW.value)
 def user_enter_review(message):
     print('Enter review success')
     Review.post_review(message)
     bot.send_message(message.chat.id, "Спасибо за оставленный отзыв :)")
     dbworker.set_state(message.chat.id, States.S_START.value)
+
+
+@bot.message_handler(content_types=['contact'])
+def contact(message):
+    if message.contact is not None:
+        Telephone.set_phone(message)
+        bot.send_message(message.chat.id, 'Номер телефону добавлено до профілю')
+        Keyboard.start_keyboard(message)
+    else:
+        bot.send_message(message.chat.id, 'Сталася помилка, ми намагаємося її виправити')
+        bot.send_message(message.chat.id, 'Перепрошою за тимчасові незручності.')
+        Keyboard.start_keyboard(message)
 
 
 @bot.message_handler(regexp="")
