@@ -13,11 +13,10 @@ class Telephone:
     def set_phone(value):
         url = url = 'http://185.25.117.22/api/v2/user/{}/'
         end_url = url.format(value.chat.id)
-        phone = value.contact.telephone
-        headers = {'Content-Type': 'application/json',}
-        data = {
-            'client': {
-                'phone': phone
-            }
-        }
-        r = requests.post(url, headers=headers, data=json.dumps(data))
+        phone = value.contact.phone_number
+        headers = {'Content-Type': 'application/json', }
+        data = Auth.get_user(value.chat.id)
+        data['client']['phone'] = phone
+        r = requests.put(end_url, headers=headers, data=json.dumps(data))
+        print(r.status_code)
+        print(r.text)
