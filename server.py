@@ -40,7 +40,6 @@ def start(message):
 def review(message):
     bot.send_message(message.chat.id, 'Напешите отзыв ;)')
     dbworker.set_state(message.chat.id, States.S_ENTER_REVIEW.value)
-    Keyboard.start_keyboard(message)
 
 
 @bot.message_handler(commands=['number'])
@@ -57,6 +56,7 @@ def user_enter_review(message):
     Review.post_review(message)
     bot.send_message(message.chat.id, "Спасибо за оставленный отзыв :)")
     dbworker.set_state(message.chat.id, States.S_START.value)
+    Keyboard.start_keyboard(message)
 
 
 @bot.message_handler(content_types=['contact'])
