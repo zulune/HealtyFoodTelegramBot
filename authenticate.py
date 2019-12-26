@@ -11,6 +11,7 @@ bot = telebot.TeleBot(token)
 
 class Auth:
 
+    @staticmethod
     def check_user(message):
         url = 'http://185.25.117.22/api/v2/user/{}/'
         r = requests.get(url.format(message.chat.id))
@@ -18,9 +19,10 @@ class Auth:
             return True
         return False
 
-    def validate_username(username):
+    def validate_username(self, username):
         return False
 
+    @staticmethod
     def create_user(message):
         url = 'http://185.25.117.22/api/v2/user/'
         username = None
@@ -52,6 +54,7 @@ class Auth:
         }
         r = requests.post(url, headers=headers, data=json.dumps(data))
 
+    @staticmethod
     def get_user(telegram_id):
         url = "http://185.25.117.22/api/v2/user/{}/"
         r = requests.get(url.format(telegram_id))

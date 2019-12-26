@@ -36,10 +36,11 @@ def start(message):
     dbworker.set_state(message.chat.id, States.S_START.value)
 
 
-@bot.message_handler(regexp="Оставить отзыв")
+@bot.message_handler(regexp="Залишити відгук")
 def review(message):
     bot.send_message(message.chat.id, 'Напешите отзыв ;)')
     dbworker.set_state(message.chat.id, States.S_ENTER_REVIEW.value)
+    Keyboard.start_keyboard(message)
 
 
 @bot.message_handler(commands=['number'])
